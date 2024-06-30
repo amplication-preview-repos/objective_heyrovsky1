@@ -18,23 +18,27 @@ import { ProductService } from "../product.service";
 const nonExistingId = "nonExistingId";
 const existingId = "existingId";
 const CREATE_INPUT = {
+  categoryId: "exampleCategoryId",
   createdAt: new Date(),
   id: "exampleId",
   updatedAt: new Date(),
 };
 const CREATE_RESULT = {
+  categoryId: "exampleCategoryId",
   createdAt: new Date(),
   id: "exampleId",
   updatedAt: new Date(),
 };
 const FIND_MANY_RESULT = [
   {
+    categoryId: "exampleCategoryId",
     createdAt: new Date(),
     id: "exampleId",
     updatedAt: new Date(),
   },
 ];
 const FIND_ONE_RESULT = {
+  categoryId: "exampleCategoryId",
   createdAt: new Date(),
   id: "exampleId",
   updatedAt: new Date(),

@@ -9,14 +9,14 @@ import { WarehouseList } from "./warehouse/WarehouseList";
 import { WarehouseCreate } from "./warehouse/WarehouseCreate";
 import { WarehouseEdit } from "./warehouse/WarehouseEdit";
 import { WarehouseShow } from "./warehouse/WarehouseShow";
-import { TenantList } from "./tenant/TenantList";
-import { TenantCreate } from "./tenant/TenantCreate";
-import { TenantEdit } from "./tenant/TenantEdit";
-import { TenantShow } from "./tenant/TenantShow";
 import { ProductList } from "./product/ProductList";
 import { ProductCreate } from "./product/ProductCreate";
 import { ProductEdit } from "./product/ProductEdit";
 import { ProductShow } from "./product/ProductShow";
+import { TenantList } from "./tenant/TenantList";
+import { TenantCreate } from "./tenant/TenantCreate";
+import { TenantEdit } from "./tenant/TenantEdit";
+import { TenantShow } from "./tenant/TenantShow";
 import { ProductVariantList } from "./productVariant/ProductVariantList";
 import { ProductVariantCreate } from "./productVariant/ProductVariantCreate";
 import { ProductVariantEdit } from "./productVariant/ProductVariantEdit";
@@ -67,18 +67,18 @@ const App = (): React.ReactElement => {
           show={WarehouseShow}
         />
         <Resource
-          name="Tenant"
-          list={TenantList}
-          edit={TenantEdit}
-          create={TenantCreate}
-          show={TenantShow}
-        />
-        <Resource
           name="Product"
           list={ProductList}
           edit={ProductEdit}
           create={ProductCreate}
           show={ProductShow}
+        />
+        <Resource
+          name="Tenant"
+          list={TenantList}
+          edit={TenantEdit}
+          create={TenantCreate}
+          show={TenantShow}
         />
         <Resource
           name="ProductVariant"

@@ -58,7 +58,15 @@ export class CategoryResolverBase {
   ): Promise<Category> {
     return await this.service.createCategory({
       ...args,
-      data: args.data,
+      data: {
+        ...args.data,
+
+        categories: args.data.categories
+          ? {
+              connect: args.data.categories,
+            }
+          : undefined,
+      },
     });
   }
 
@@ -69,7 +77,15 @@ export class CategoryResolverBase {
     try {
       return await this.service.updateCategory({
         ...args,
-        data: args.data,
+        data: {
+          ...args.data,
+
+          categories: args.data.categories
+            ? {
+                connect: args.data.categories,
+              }
+            : undefined,
+        },
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -95,5 +111,34 @@ export class CategoryResolverBase {
       }
       throw error;
     }
+  }
+
+  @graphql.ResolveField(() => [Category], { name: "parentId" })
+  async findParentId(
+    @graphql.Parent() parent: Category,
+    @graphql.Args() args: CategoryFindManyArgs
+  ): Promise<Category[]> {
+    const results = await this.service.findParentId(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
+  }
+
+  @graphql.ResolveField(() => Category, {
+    nullable: true,
+    name: "categories",
+  })
+  async getCategories(
+    @graphql.Parent() parent: Category
+  ): Promise<Category | null> {
+    const result = await this.service.getCategories(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return result;
   }
 }

@@ -13,14 +13,15 @@ model Warehouse {
   updatedAt DateTime @updatedAt
 }
 
-model Tenant {
-  active    String?
-  createdAt DateTime @default(now())
-  id        String   @id @default(cuid())
-  updatedAt DateTime @updatedAt
+model Product {
+  categoryId String?
+  createdAt  DateTime @default(now())
+  id         String   @id @default(cuid())
+  updatedAt  DateTime @updatedAt
 }
 
-model Product {
+model Tenant {
+  active    String?
   createdAt DateTime @default(now())
   id        String   @id @default(cuid())
   updatedAt DateTime @updatedAt
@@ -45,8 +46,11 @@ model StockMovement {
 }
 
 model Category {
-  createdAt DateTime @default(now())
-  id        String   @id @default(cuid())
-  name      String   @unique
-  updatedAt DateTime @updatedAt
+  categories   Category?  @relation(name: "categories", fields: [categoriesId], references: [id])
+  categoriesId String?
+  createdAt    DateTime   @default(now())
+  id           String     @id @default(cuid())
+  name         String     @unique
+  parentId     Category[] @relation(name: "categories")
+  updatedAt    DateTime   @updatedAt
 }

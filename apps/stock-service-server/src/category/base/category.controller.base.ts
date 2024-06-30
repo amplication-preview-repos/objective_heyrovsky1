@@ -31,8 +31,22 @@ export class CategoryControllerBase {
     @common.Body() data: CategoryCreateInput
   ): Promise<Category> {
     return await this.service.createCategory({
-      data: data,
+      data: {
+        ...data,
+
+        categories: data.categories
+          ? {
+              connect: data.categories,
+            }
+          : undefined,
+      },
       select: {
+        categories: {
+          select: {
+            id: true,
+          },
+        },
+
         createdAt: true,
         id: true,
         name: true,
@@ -49,6 +63,12 @@ export class CategoryControllerBase {
     return this.service.categories({
       ...args,
       select: {
+        categories: {
+          select: {
+            id: true,
+          },
+        },
+
         createdAt: true,
         id: true,
         name: true,
@@ -66,6 +86,12 @@ export class CategoryControllerBase {
     const result = await this.service.category({
       where: params,
       select: {
+        categories: {
+          select: {
+            id: true,
+          },
+        },
+
         createdAt: true,
         id: true,
         name: true,
@@ -90,8 +116,22 @@ export class CategoryControllerBase {
     try {
       return await this.service.updateCategory({
         where: params,
-        data: data,
+        data: {
+          ...data,
+
+          categories: data.categories
+            ? {
+                connect: data.categories,
+              }
+            : undefined,
+        },
         select: {
+          categories: {
+            select: {
+              id: true,
+            },
+          },
+
           createdAt: true,
           id: true,
           name: true,
@@ -118,6 +158,12 @@ export class CategoryControllerBase {
       return await this.service.deleteCategory({
         where: params,
         select: {
+          categories: {
+            select: {
+              id: true,
+            },
+          },
+
           createdAt: true,
           id: true,
           name: true,
@@ -132,5 +178,86 @@ export class CategoryControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.Get("/:id/parentId")
+  @ApiNestedQuery(CategoryFindManyArgs)
+  async findParentId(
+    @common.Req() request: Request,
+    @common.Param() params: CategoryWhereUniqueInput
+  ): Promise<Category[]> {
+    const query = plainToClass(CategoryFindManyArgs, request.query);
+    const results = await this.service.findParentId(params.id, {
+      ...query,
+      select: {
+        categories: {
+          select: {
+            id: true,
+          },
+        },
+
+        createdAt: true,
+        id: true,
+        name: true,
+        updatedAt: true,
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.Post("/:id/parentId")
+  async connectParentId(
+    @common.Param() params: CategoryWhereUniqueInput,
+    @common.Body() body: CategoryWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      parentId: {
+        connect: body,
+      },
+    };
+    await this.service.updateCategory({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Patch("/:id/parentId")
+  async updateParentId(
+    @common.Param() params: CategoryWhereUniqueInput,
+    @common.Body() body: CategoryWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      parentId: {
+        set: body,
+      },
+    };
+    await this.service.updateCategory({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Delete("/:id/parentId")
+  async disconnectParentId(
+    @common.Param() params: CategoryWhereUniqueInput,
+    @common.Body() body: CategoryWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      parentId: {
+        disconnect: body,
+      },
+    };
+    await this.service.updateCategory({
+      where: params,
+      data,
+      select: { id: true },
+    });
   }
 }

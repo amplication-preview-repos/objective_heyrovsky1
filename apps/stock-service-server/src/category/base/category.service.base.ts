@@ -44,4 +44,23 @@ export class CategoryServiceBase {
   ): Promise<PrismaCategory> {
     return this.prisma.category.delete(args);
   }
+
+  async findParentId(
+    parentId: string,
+    args: Prisma.CategoryFindManyArgs
+  ): Promise<PrismaCategory[]> {
+    return this.prisma.category
+      .findUniqueOrThrow({
+        where: { id: parentId },
+      })
+      .parentId(args);
+  }
+
+  async getCategories(parentId: string): Promise<PrismaCategory | null> {
+    return this.prisma.category
+      .findUnique({
+        where: { id: parentId },
+      })
+      .categories();
+  }
 }

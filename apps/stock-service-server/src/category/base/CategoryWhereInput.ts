@@ -11,12 +11,26 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { StringFilter } from "../../util/StringFilter";
+import { CategoryWhereUniqueInput } from "./CategoryWhereUniqueInput";
+import { ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
-import { IsOptional } from "class-validator";
+import { StringFilter } from "../../util/StringFilter";
+import { CategoryListRelationFilter } from "./CategoryListRelationFilter";
 
 @InputType()
 class CategoryWhereInput {
+  @ApiProperty({
+    required: false,
+    type: () => CategoryWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => CategoryWhereUniqueInput)
+  @IsOptional()
+  @Field(() => CategoryWhereUniqueInput, {
+    nullable: true,
+  })
+  categories?: CategoryWhereUniqueInput;
+
   @ApiProperty({
     required: false,
     type: StringFilter,
@@ -38,6 +52,18 @@ class CategoryWhereInput {
     nullable: true,
   })
   name?: StringFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => CategoryListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => CategoryListRelationFilter)
+  @IsOptional()
+  @Field(() => CategoryListRelationFilter, {
+    nullable: true,
+  })
+  parentId?: CategoryListRelationFilter;
 }
 
 export { CategoryWhereInput as CategoryWhereInput };

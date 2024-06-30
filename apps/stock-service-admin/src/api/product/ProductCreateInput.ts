@@ -1,1 +1,3 @@
-export type ProductCreateInput = {};
+export type ProductCreateInput = {
+  categoryId?: string | null;
+};

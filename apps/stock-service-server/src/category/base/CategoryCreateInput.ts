@@ -11,10 +11,30 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, MaxLength } from "class-validator";
+import { CategoryWhereUniqueInput } from "./CategoryWhereUniqueInput";
+import {
+  ValidateNested,
+  IsOptional,
+  IsString,
+  MaxLength,
+} from "class-validator";
+import { Type } from "class-transformer";
+import { CategoryCreateNestedManyWithoutCategoriesInput } from "./CategoryCreateNestedManyWithoutCategoriesInput";
 
 @InputType()
 class CategoryCreateInput {
+  @ApiProperty({
+    required: false,
+    type: () => CategoryWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => CategoryWhereUniqueInput)
+  @IsOptional()
+  @Field(() => CategoryWhereUniqueInput, {
+    nullable: true,
+  })
+  categories?: CategoryWhereUniqueInput | null;
+
   @ApiProperty({
     required: true,
     type: String,
@@ -23,6 +43,18 @@ class CategoryCreateInput {
   @MaxLength(1000)
   @Field(() => String)
   name!: string;
+
+  @ApiProperty({
+    required: false,
+    type: () => CategoryCreateNestedManyWithoutCategoriesInput,
+  })
+  @ValidateNested()
+  @Type(() => CategoryCreateNestedManyWithoutCategoriesInput)
+  @IsOptional()
+  @Field(() => CategoryCreateNestedManyWithoutCategoriesInput, {
+    nullable: true,
+  })
+  parentId?: CategoryCreateNestedManyWithoutCategoriesInput;
 }
 
 export { CategoryCreateInput as CategoryCreateInput };

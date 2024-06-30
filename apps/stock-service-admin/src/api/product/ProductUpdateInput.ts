@@ -1,1 +1,3 @@
-export type ProductUpdateInput = {};
+export type ProductUpdateInput = {
+  categoryId?: string | null;
+};

@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { WarehouseModule } from "./warehouse/warehouse.module";
-import { TenantModule } from "./tenant/tenant.module";
 import { ProductModule } from "./product/product.module";
+import { TenantModule } from "./tenant/tenant.module";
 import { ProductVariantModule } from "./productVariant/productVariant.module";
 import { StockTransferModule } from "./stockTransfer/stockTransfer.module";
 import { StockMovementModule } from "./stockMovement/stockMovement.module";
@@ -19,8 +19,8 @@ import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
   controllers: [],
   imports: [
     WarehouseModule,
-    TenantModule,
     ProductModule,
+    TenantModule,
     ProductVariantModule,
     StockTransferModule,
     StockMovementModule,

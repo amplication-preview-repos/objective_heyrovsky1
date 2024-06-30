@@ -33,6 +33,7 @@ export class ProductControllerBase {
     return await this.service.createProduct({
       data: data,
       select: {
+        categoryId: true,
         createdAt: true,
         id: true,
         updatedAt: true,
@@ -48,6 +49,7 @@ export class ProductControllerBase {
     return this.service.products({
       ...args,
       select: {
+        categoryId: true,
         createdAt: true,
         id: true,
         updatedAt: true,
@@ -64,6 +66,7 @@ export class ProductControllerBase {
     const result = await this.service.product({
       where: params,
       select: {
+        categoryId: true,
         createdAt: true,
         id: true,
         updatedAt: true,
@@ -89,6 +92,7 @@ export class ProductControllerBase {
         where: params,
         data: data,
         select: {
+          categoryId: true,
           createdAt: true,
           id: true,
           updatedAt: true,
@@ -114,6 +118,7 @@ export class ProductControllerBase {
       return await this.service.deleteProduct({
         where: params,
         select: {
+          categoryId: true,
           createdAt: true,
           id: true,
           updatedAt: true,
